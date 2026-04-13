@@ -1,0 +1,199 @@
+{
+  "meta": {
+    "title": "PDAI Calculator — Pemphigus Disease Area Index | Skin Lab Pro",
+    "description": "Free online PDAI calculator for dermatologists. Assess pemphigus severity with the standardized Pemphigus Disease Area Index score."
+  },
+  "header": {
+    "title": "PDAI Calculator",
+    "subtitle": "Pemphigus Disease Area Index Calculator",
+    "by": "by itsmegauka"
+  },
+  "actions": {
+    "print": "Print",
+    "downloadPdf": "Download PDF",
+    "pdfLoading": "Generating...",
+    "reset": "Reset",
+    "resetConfirm": "Are you sure? All data will be cleared.",
+    "undo": "Undo",
+    "more": "More"
+  },
+  "patient": {
+    "title": "Patient Data",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "John Doe",
+    "birthYear": "Date of Birth",
+    "birthYearPlaceholder": "1985",
+    "diagnosis": "Diagnosis",
+    "diagnosisPlaceholder": "Pemphigus vulgaris",
+    "immunofluorescence": "Direct Immunofluorescence",
+    "selectPlaceholder": "Select...",
+    "ifNone": "0 - None",
+    "ifWeak": "+ Weak",
+    "ifModerate": "++ Moderate",
+    "ifStrong": "+++ Strong"
+  },
+  "visualization": {
+    "title": "Affected Areas Visualization",
+    "body": "Body & Skin",
+    "head": "Head",
+    "oral": "Mucous Membranes",
+    "torso": "Trunk",
+    "extraOral": "Extra-oral mucosa:",
+    "normal": "Normal",
+    "affected": "Affected",
+    "pigmentation": "Pigmentation"
+  },
+  "skin": {
+    "title": "Skin",
+    "scaleTitle": "Erosion/Blister or new erythema grading scale:",
+    "scale0": "0 — absent",
+    "scale1": "1 — 1-3 lesions, up to 1-2 cm in any diameter, no more than 6 cm",
+    "scale2": "2 — 2-3 lesions, at least 2 lesions >2 cm in diameter, no more than 6 cm",
+    "scale3": "3 — more than 3 lesions, no more than 6 cm in diameter",
+    "scale5": "5 — more than 3 lesions, and/or at least 1 lesion >6 cm",
+    "scale10": "10 — more than 3 lesions, and/or at least 1 lesion >16 cm in diameter or entire area",
+    "lesionTitle": "Number of lesions if ≤3:",
+    "lesionDesc": "When the number of lesions is ≤3 elements, with 1 element ≥2 cm in diameter, but no elements ≥6 cm:",
+    "lesion1": "1 element = 1 point",
+    "lesion2": "2 elements = 1.3 points",
+    "lesion3": "3 elements = 1.6 points",
+    "pigmentationTitle": "Post-inflammatory hyperpigmentation or erythema of resolved lesion:",
+    "pigmentation0": "0 — absent",
+    "pigmentation1": "1 — present (number of lesions ≤3)",
+    "colLocation": "Anatomical Location",
+    "colErosions": "Erosions/Blisters or new erythema",
+    "colLesionCount": "Number of lesions if ≤3",
+    "colPigmentation": "Post-inflammatory hyperpigmentation",
+    "totalSkin": "Total skin surface:",
+    "ears": "Ears",
+    "nose": "Nose",
+    "face": "Rest of face",
+    "neck": "Neck",
+    "chest": "Chest",
+    "abdomen": "Abdomen",
+    "back": "Back, buttocks",
+    "arms": "Arms",
+    "hands": "Hands",
+    "legs": "Legs",
+    "feet": "Feet",
+    "genitals": "Genitals"
+  },
+  "scalp": {
+    "title": "Scalp",
+    "scaleTitle": "Erosion/Blister or new erythema grading scale:",
+    "scale0": "0 — absent",
+    "scale1": "1 — one quadrant",
+    "scale2": "2 — two quadrants",
+    "scale3": "3 — three quadrants",
+    "scale4": "4 — entire scalp surface",
+    "scale10": "10 — at least 1 lesion >6 cm",
+    "colScalp": "Scalp",
+    "colErosions": "Erosions/Blisters or new erythema",
+    "colLesionCount": "Number of lesions if ≤3",
+    "colPigmentation": "Post-inflammatory hyperpigmentation",
+    "totalScalp": "Total scalp surface (0-10):"
+  },
+  "mucosa": {
+    "title": "Mucous Membranes",
+    "scaleTitle": "Erosion/Blister grading scale:",
+    "scale0": "0 — absent",
+    "scale1": "1 — 1 lesion",
+    "scale2": "2 — 2-3 lesions",
+    "scale5": "5 — more than 3 lesions or 2 lesions >2 cm",
+    "scale10": "10 — entire area",
+    "note": "Note:",
+    "noteText": "For mucous membranes, the number of lesions is included in the main score. Additional lesion counting is not required.",
+    "colLocation": "Anatomical Location",
+    "colErosions": "Erosions/Blisters",
+    "totalMucosa": "Total mucous membranes:",
+    "eyes": "Eyes",
+    "nose": "Nose",
+    "buccal": "Buccal mucosa",
+    "hardPalate": "Hard palate",
+    "softPalate": "Soft palate",
+    "upperGingiva": "Upper gingiva",
+    "lowerGingiva": "Lower gingiva",
+    "tongue": "Tongue",
+    "floorOfMouth": "Floor of mouth",
+    "lips": "Labial mucosa",
+    "pharynx": "Posterior pharynx",
+    "anogenital": "Anogenital area"
+  },
+  "results": {
+    "title": "PDAI Total Scores",
+    "severity": "Total severity score:",
+    "severityMax": "(Maximum: 250)",
+    "damage": "Total damage score:",
+    "damageMax": "(Maximum: 13)",
+    "total": "Total PDAI score:",
+    "totalMax": "(Maximum: 263)",
+    "level": "Severity level:",
+    "mild": "Mild severity",
+    "moderate": "Moderate severity",
+    "severe": "Severe"
+  },
+  "recommendations": {
+    "title": "Physician Recommendations",
+    "placeholder": "Enter recommendations for the patient..."
+  },
+  "info": {
+    "title": "About PDAI",
+    "description": "PDAI (Pemphigus Disease Area Index) is a standardized scale for assessing pemphigus severity, developed by an international expert committee.",
+    "attribution": "The PDAI scoring system was developed by the International Pemphigus Definitions Committee, led by Dedee F. Murrell and Victoria P. Werth.",
+    "citation": "Murrell DF, Dick S, Ahmed AR, et al. Consensus statement on definitions of disease, end points, and therapeutic response for pemphigus. J Am Acad Dermatol. 2008;58(6):1043-1046.",
+    "digitalTool": "This web application is a digital implementation of the published scoring system and is not affiliated with the original methodology authors.",
+    "disclaimer": "This calculator is intended for use by medical professionals and does not replace clinical judgment.",
+    "interpretation": "Interpretation of results:",
+    "mild": "Mild: less than 15 points",
+    "moderate": "Moderate: 15-44 points",
+    "severe": "Severe: 45 and more points"
+  },
+  "footer": {
+    "copyright": "© 2024-2026 Skin Lab Pro by itsmegauka",
+    "medical": "For medical use",
+    "disclaimer": "Digital implementation of the PDAI scale (Murrell et al., 2008)"
+  },
+  "printHeader": "PDAI Calculator | Date:",
+  "guide": {
+    "toggle": "Scoring guide"
+  },
+  "treatmentGuide": {
+    "title": "Patient Management Guidelines",
+    "tab": {
+      "mild": "Mild (<15)",
+      "moderate": "Moderate (15–44)",
+      "severe": "Severe (≥45)",
+      "general": "General"
+    },
+    "sections": {
+      "treatment": "Treatment",
+      "management": "Management",
+      "nutrition": "Nutrition"
+    },
+    "mild": {
+      "treatment": "1. Systemic therapy: Prednisolone 0.5–1 mg/kg/day with gradual tapering.\n2. Steroid-sparing therapy: Azathioprine 1–3 mg/kg/day or Mycophenolate mofetil 2–3 g/day.\n3. Topical therapy: Topical corticosteroids (clobetasol 0.05%) on erosions and blisters; antiseptic solutions (chlorhexidine 0.05%) for erosion care.",
+      "management": "• Outpatient dermatologist follow-up every 2–4 weeks.\n• Complete blood count and biochemistry monitoring every 2–4 weeks.\n• Anti-desmoglein antibody titer monitoring (every 3 months).\n• PDAI assessment at each visit.",
+      "nutrition": "• Soft diet if mucosal involvement (pureed food, avoid spicy, acidic, hot foods).\n• Adequate protein intake (1.2–1.5 g/kg/day) for tissue repair.\n• Calcium (1000–1200 mg/day) and Vitamin D (800–1000 IU/day) for osteoporosis prevention during corticosteroid therapy."
+    },
+    "moderate": {
+      "treatment": "1. Systemic therapy: Prednisolone 1–1.5 mg/kg/day.\n2. Immunosuppression: Azathioprine 2–3 mg/kg/day or Mycophenolate mofetil 2–3 g/day; consider Rituximab if insufficient response.\n3. Topical therapy: High-potency topical corticosteroids; antiseptic erosion care; for oral involvement — dexamethasone rinse solution.",
+      "management": "• Consider hospitalization if rapidly progressive.\n• Dermatologist evaluation every 1–2 weeks.\n• Weekly complete blood count and biochemistry monitoring.\n• Anti-desmoglein antibody titer monitoring (every 1–3 months).\n• PDAI assessment at each visit, photodocumentation of lesions.",
+      "nutrition": "• High-protein diet (1.5–2 g/kg/day protein).\n• Liquid or semi-liquid food consistency if significant mucosal involvement.\n• Increased calcium and Vitamin D supplementation.\n• Glycemic control (limit simple carbohydrates during high-dose corticosteroid therapy)."
+    },
+    "severe": {
+      "treatment": "1. Systemic therapy: Pulse methylprednisolone (500–1000 mg/day IV for 3 days) followed by Prednisolone 1.5–2 mg/kg/day.\n2. Biologic therapy: Rituximab (1000 mg IV, 2 infusions 2 weeks apart) — consider as first-line therapy.\n3. Immunosuppression: Cyclophosphamide or Azathioprine + Mycophenolate mofetil.\n4. IVIG: Intravenous immunoglobulin 2 g/kg per cycle for refractory disease.\n5. Topical therapy: Specialized wound dressings; antiseptic care; pain management.",
+      "management": "• Mandatory hospitalization.\n• Multidisciplinary approach (dermatologist, internist, nutritionist; ophthalmologist if ocular involvement).\n• Daily monitoring: fluid-electrolyte balance, glycemia, blood pressure, temperature.\n• Blood work 2–3 times per week.\n• Infection prevention (wound cultures, antibiotics if needed).\n• Thromboembolic complication prophylaxis.",
+      "nutrition": "• High-calorie, high-protein diet (2–2.5 g/kg/day protein).\n• If oral feeding is impossible — nasogastric tube or parenteral nutrition.\n• Enhanced nutritional support: B vitamins, zinc, Vitamin C.\n• Strict glycemic control.\n• Adequate hydration (fluid balance monitoring)."
+    },
+    "general": {
+      "title": "General Recommendations",
+      "content": "• Avoid skin trauma (Nikolsky sign phenomenon).\n• Wear soft, loose clothing made of natural fabrics.\n• Avoid UV exposure (SPF 50+ sunscreen).\n• Oral hygiene: soft toothbrush, non-abrasive toothpaste.\n• Osteoporosis prevention during long-term corticosteroid therapy.\n• Vaccination: pneumococcal, influenza (before immunosuppression or during remission).\n• Psychological support for the patient.\n• Patient education: recognizing flares, skin care protocols.\n• Regular photodocumentation of lesions for monitoring."
+    },
+    "notes": {
+      "title": "Notes — Lesion Counting Rule",
+      "rule1": "1 element = 1 point",
+      "rule2": "2 elements = 1.3 points",
+      "rule3": "3 elements = 1.6 points"
+    }
+  }
+}

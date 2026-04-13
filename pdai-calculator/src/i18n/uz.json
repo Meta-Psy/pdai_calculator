@@ -1,0 +1,199 @@
+{
+  "meta": {
+    "title": "PDAI Calculator — Po'rsildoq yara kasalligi teri yuzasi shikastlanish indeksi | Skin Lab Pro",
+    "description": "Dermatologlar uchun bepul onlayn PDAI kalkulyatori. Pemfigus kasalligining og'irligini Pemphigus Disease Area Index bo'yicha baholang."
+  },
+  "header": {
+    "title": "PDAI Calculator",
+    "subtitle": "Po'rsildoq yara kasalligi teri yuzasi shikastlanish indeksi kalkulyatori",
+    "by": "by itsmegauka"
+  },
+  "actions": {
+    "print": "Chop etish",
+    "downloadPdf": "PDF yuklab olish",
+    "pdfLoading": "Yaratilmoqda...",
+    "reset": "Tozalash",
+    "resetConfirm": "Ishonchingiz komilmi? Barcha ma'lumotlar o'chiriladi.",
+    "undo": "Bekor qilish",
+    "more": "Ko'proq"
+  },
+  "patient": {
+    "title": "Bemor ma'lumotlari",
+    "fullName": "F.I.Sh.",
+    "fullNamePlaceholder": "Karimov Alisher Botirovich",
+    "birthYear": "Tug'ilgan yili",
+    "birthYearPlaceholder": "1985",
+    "diagnosis": "Tashxis",
+    "diagnosisPlaceholder": "Vulgar po'rsildoq",
+    "immunofluorescence": "To'g'ridan-to'g'ri immunofluoressensiya",
+    "selectPlaceholder": "Tanlang...",
+    "ifNone": "0 - Yo'q",
+    "ifWeak": "+ Kuchsiz",
+    "ifModerate": "++ O'rtacha",
+    "ifStrong": "+++ Kuchli"
+  },
+  "visualization": {
+    "title": "Shikastlangan teri sohalari vizualizatsiyasi",
+    "body": "Tana va teri",
+    "head": "Bosh",
+    "oral": "Shilliq qavatlar",
+    "torso": "Tana",
+    "extraOral": "Og'izdan tashqari shilliq qavatlar:",
+    "normal": "Norma",
+    "affected": "Shikastlangan",
+    "pigmentation": "Pigmentatsiya"
+  },
+  "skin": {
+    "title": "Teri",
+    "scaleTitle": "Eroziya/pufaklar yoki yangi eritema baholash shkalasi:",
+    "scale0": "0 — yo'q",
+    "scale1": "1 — 1-3 o'choq, 1-2 sm gacha, 6 sm dan oshmaydigan",
+    "scale2": "2 — 2-3 o'choq, kamida 2 ta o'choq diametri 2 sm dan katta, 6 sm dan oshmaydigan",
+    "scale3": "3 — 3 dan ortiq o'choq, diametri 6 sm dan oshmaydigan",
+    "scale5": "5 — 3 dan ortiq o'choq, va/yoki kamida 1 o'choq 6 sm dan katta",
+    "scale10": "10 — 3 dan ortiq o'choq, va/yoki kamida 1 o'choq diametri 16 sm dan katta yoki butun yuzasi",
+    "lesionTitle": "O'choqlar soni ≤3 bo'lsa:",
+    "lesionDesc": "O'choqlar soni ≤3 ta bo'lganda, 1 element diametri ≥2 sm, lekin ≥6 sm element yo'q:",
+    "lesion1": "1 element = 1 ball",
+    "lesion2": "2 element = 1.3 ball",
+    "lesion3": "3 element = 1.6 ball",
+    "pigmentationTitle": "Yallig'lanishdan keyingi giperpigmentatsiya yoki so'rilgan o'choq eritemasi:",
+    "pigmentation0": "0 — yo'q",
+    "pigmentation1": "1 — mavjud (o'choqlar soni ≤3)",
+    "colLocation": "Anatomik joylashuv",
+    "colErosions": "Eroziyalar/Pufaklar yoki yangi eritema",
+    "colLesionCount": "O'choqlar soni ≤3 bo'lsa",
+    "colPigmentation": "Yallig'lanishdan keyingi giperpigmentatsiya",
+    "totalSkin": "Barcha teri yuzasi:",
+    "ears": "Quloqlar",
+    "nose": "Burun",
+    "face": "Yuzning qolgan qismi",
+    "neck": "Bo'yin",
+    "chest": "Ko'krak",
+    "abdomen": "Qorin",
+    "back": "Orqa, dumba",
+    "arms": "Qo'llar",
+    "hands": "Kaftlar",
+    "legs": "Oyoqlar",
+    "feet": "Tovonlar",
+    "genitals": "Jinsiy a'zolar"
+  },
+  "scalp": {
+    "title": "Bosh terisi",
+    "scaleTitle": "Eroziya/pufaklar yoki yangi eritema baholash shkalasi:",
+    "scale0": "0 — yo'q",
+    "scale1": "1 — bitta kvadrantda",
+    "scale2": "2 — ikki kvadrant",
+    "scale3": "3 — uch kvadrant",
+    "scale4": "4 — bosh suyagi butun yuzasini qamrab oladi",
+    "scale10": "10 — kamida 1 o'choq 6 sm dan katta",
+    "colScalp": "Bosh terisi",
+    "colErosions": "Eroziyalar/Pufaklar yoki yangi eritema",
+    "colLesionCount": "O'choqlar soni ≤3 bo'lsa",
+    "colPigmentation": "Yallig'lanishdan keyingi giperpigmentatsiya",
+    "totalScalp": "Bosh terisining barcha yuzasi (0-10):"
+  },
+  "mucosa": {
+    "title": "Shilliq qavat",
+    "scaleTitle": "Eroziya/pufaklar baholash shkalasi:",
+    "scale0": "0 — yo'q",
+    "scale1": "1 — 1 o'choq",
+    "scale2": "2 — 2-3 o'choq",
+    "scale5": "5 — 3 dan ortiq o'choq yoki 2 sm dan katta 2 o'choq",
+    "scale10": "10 — butun maydon",
+    "note": "Eslatma:",
+    "noteText": "Shilliq qavatlar uchun o'choqlar soni asosiy bahoda hisobga olinadi. Qo'shimcha o'choq sanash talab qilinmaydi.",
+    "colLocation": "Anatomik joylashuv",
+    "colErosions": "Eroziyalar/Pufaklar",
+    "totalMucosa": "Barcha shilliq qavat:",
+    "eyes": "Ko'zlar",
+    "nose": "Burun",
+    "buccal": "Yonoq shilliq qavati",
+    "hardPalate": "Qattiq tanglay",
+    "softPalate": "Yumshoq tanglay",
+    "upperGingiva": "Yuqori milk",
+    "lowerGingiva": "Pastki milk",
+    "tongue": "Til",
+    "floorOfMouth": "Og'iz bo'shlig'i tubi",
+    "lips": "Lab shilliq qavati",
+    "pharynx": "Halqumning orqa devori",
+    "anogenital": "Anogenital yuzasi"
+  },
+  "results": {
+    "title": "PDAI yakuniy ballari",
+    "severity": "Umumiy og'irlik balli:",
+    "severityMax": "(Maksimum: 250)",
+    "damage": "Umumiy zararlanish balli:",
+    "damageMax": "(Maksimum: 13)",
+    "total": "Umumiy PDAI balli:",
+    "totalMax": "(Maksimum: 263)",
+    "level": "Og'irlik darajasi:",
+    "mild": "Yengil daraja",
+    "moderate": "O'rtacha daraja",
+    "severe": "Og'ir daraja"
+  },
+  "recommendations": {
+    "title": "Shifokor tavsiyalari",
+    "placeholder": "Bemor uchun tavsiyalarni kiriting..."
+  },
+  "info": {
+    "title": "PDAI haqida",
+    "description": "PDAI (Pemphigus Disease Area Index) — pemfigus og'irligini baholash uchun xalqaro ekspert qo'mitasi tomonidan ishlab chiqilgan standartlashtirilgan shkala.",
+    "attribution": "PDAI shkalasi International Pemphigus Definitions Committee tomonidan Dedee F. Murrell va Victoria P. Werth rahbarligida ishlab chiqilgan.",
+    "citation": "Murrell DF, Dick S, Ahmed AR, et al. Consensus statement on definitions of disease, end points, and therapeutic response for pemphigus. J Am Acad Dermatol. 2008;58(6):1043-1046.",
+    "digitalTool": "Ushbu veb-ilova nashr etilgan shkalaning raqamli versiyasi bo'lib, asl metodologiya mualliflari bilan bog'liq emas.",
+    "disclaimer": "Kalkulyator tibbiyot mutaxassislari uchun mo'ljallangan va shifokor xulosasini almashtirolmaydi.",
+    "interpretation": "Natijalar talqini:",
+    "mild": "Yengil daraja: 15 balldan kam",
+    "moderate": "O'rtacha daraja: 15-44 ball",
+    "severe": "Og'ir daraja: 45 va undan ortiq ball"
+  },
+  "footer": {
+    "copyright": "© 2024-2026 Skin Lab Pro by itsmegauka",
+    "medical": "Tibbiy foydalanish uchun",
+    "disclaimer": "PDAI shkalasining raqamli versiyasi (Murrell et al., 2008)"
+  },
+  "printHeader": "PDAI Calculator | Sana:",
+  "guide": {
+    "toggle": "Baholash shkalasi"
+  },
+  "treatmentGuide": {
+    "title": "Bemorlarni boshqarish bo'yicha tavsiyalar",
+    "tab": {
+      "mild": "Yengil (<15)",
+      "moderate": "O'rtacha (15–44)",
+      "severe": "Og'ir (≥45)",
+      "general": "Umumiy"
+    },
+    "sections": {
+      "treatment": "Davolash",
+      "management": "Boshqarish",
+      "nutrition": "Ovqatlanish"
+    },
+    "mild": {
+      "treatment": "1. Tizimli terapiya: Prednizolon 0,5–1 mg/kg/kun dozani asta-sekin kamaytirish bilan.\n2. Steroid tejovchi terapiya: Azatioprin 1–3 mg/kg/kun yoki Mikofenolat mofetil 2–3 g/kun.\n3. Mahalliy terapiya: Topikal kortikosteroidlar (klobetazol 0,05%) eroziya va pufaklarga; antiseptik eritmalar (xlorgeksidin 0,05%) eroziyalarni ishlov berish uchun.",
+      "management": "• Dermatolog ambulatoriya nazorati har 2–4 haftada.\n• Klinik qon tahlili va biokimyoviy tekshiruvlar har 2–4 haftada.\n• Desmogleinga qarshi antitanalar titrini monitoring qilish (har 3 oyda).\n• Har bir tashrifda PDAI baholash.",
+      "nutrition": "• Shilliq qavat shikastlanganda yumshoq dieta (maydalangan taom, achchiq, nordon, issiq taomlardan saqlanish).\n• Tkaninalarni tiklash uchun yetarli oqsil iste'moli (1,2–1,5 g/kg/kun).\n• GKS fonida osteoporoz profilaktikasi uchun kaltsiy (1000–1200 mg/kun) va D vitamini (800–1000 XB/kun)."
+    },
+    "moderate": {
+      "treatment": "1. Tizimli terapiya: Prednizolon 1–1,5 mg/kg/kun.\n2. Immunosupressiya: Azatioprin 2–3 mg/kg/kun yoki Mikofenolat mofetil 2–3 g/kun; yetarli javob bo'lmaganda — Rituksimabni ko'rib chiqish.\n3. Mahalliy terapiya: Yuqori faollikdagi topikal kortikosteroidlar; eroziyalarni antiseptik ishlov berish; og'iz bo'shlig'i shikastlanganda — deksametazon chayish eritmasi.",
+      "management": "• Tez rivojlanayotganda gospitalizatsiyani ko'rib chiqish.\n• Dermatolog ko'rigi har 1–2 haftada.\n• Klinik va biokimyoviy qon tahlillarini har hafta monitoring qilish.\n• Desmogleinga qarshi antitanalar titrini monitoring qilish (har 1–3 oyda).\n• Har bir tashrifda PDAI baholash, shikastlanishlarni suratga olish.",
+      "nutrition": "• Yuqori oqsilli dieta (1,5–2 g/kg/kun oqsil).\n• Shilliq qavat kuchli shikastlanganda suyuq yoki yarim suyuq ovqat.\n• Kaltsiy va D vitaminini ko'paytirilgan dozalarda.\n• Glikemiya nazorati (yuqori dozali GKS fonida tez hazm bo'ladigan uglevodlarni cheklash)."
+    },
+    "severe": {
+      "treatment": "1. Tizimli terapiya: Metilprednizolon puls-terapiyasi (500–1000 mg/kun v/v 3 kun) keyin Prednizolon 1,5–2 mg/kg/kun.\n2. Biologik terapiya: Rituksimab (1000 mg v/v, 2 hafta oraliq bilan 2 infuziya) — birinchi qator terapiya sifatida ko'rib chiqish.\n3. Immunosupressiya: Tsiklofosfamid yoki Azatioprin + Mikofenolat mofetil.\n4. VVIG: Immunoglobulin v/v 2 g/kg har bir tsiklda refrakter kechishda.\n5. Mahalliy terapiya: Maxsus bog'lamlar; antiseptik ishlov berish; og'riq qoldirish.",
+      "management": "• Majburiy gospitalizatsiya.\n• Multidistsiplinar yondashuv (dermatolog, terapevt, nutritsiolog, ko'z shikastlanganda — oftalmolog).\n• Kundalik monitoring: suv-elektrolit balansi, glikemiya, qon bosimi, harorat.\n• Qon tahlillari haftada 2–3 marta.\n• Infektsiyalar profilaktikasi (eroziyalardan ekim, zarur bo'lganda — antibiotikoterapiya).\n• Tromboembolik asoratlar profilaktikasi.",
+      "nutrition": "• Yuqori kaloriyali yuqori oqsilli dieta (2–2,5 g/kg/kun oqsil).\n• Og'iz orqali ovqatlanish mumkin bo'lmaganda — nazogastral zond yoki parenteral ovqatlanish.\n• Kuchaytirilgan nutritiv qo'llab-quvvatlash: B guruhi vitaminlari, rux, C vitamini.\n• Qat'iy glikemiya nazorati.\n• Yetarli gidratatsiya (suv balansini monitoring qilish)."
+    },
+    "general": {
+      "title": "Umumiy tavsiyalar",
+      "content": "• Teri shikastlanishidan saqlaning (Nikolskiy belgisi fenomeni).\n• Tabiiy matolardan tikilgan yumshoq, erkin kiyim kiying.\n• UB nurlanishdan saqlaning (SPF 50+ quyoshdan himoya kremlari).\n• Og'iz bo'shlig'i gigienasi: yumshoq tish cho'tkasi, abraziv bo'lmagan tish pastasi.\n• Uzoq muddatli GKS terapiyasi fonida osteoporoz profilaktikasi.\n• Vaksinatsiya: pnevmokokk, gripp (immunosupressiyadan oldin yoki remissiya davrida).\n• Bemorga psixologik yordam.\n• Bemorni o'qitish: qo'zg'alishlarni aniqlash, teriga parvarish qoidalari.\n• Shikastlanishlarni muntazam suratga olish va dinamikani kuzatish."
+    },
+    "notes": {
+      "title": "Eslatmalar — Elementlarni hisoblash qoidasi",
+      "rule1": "1 element = 1 ball",
+      "rule2": "2 element = 1.3 ball",
+      "rule3": "3 element = 1.6 ball"
+    }
+  }
+}

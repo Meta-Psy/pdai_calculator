@@ -1,0 +1,333 @@
+@import "tailwindcss";
+
+/* Base resets */
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+/* Force vertical centering in all table cells */
+table th,
+table td {
+  vertical-align: middle !important;
+}
+
+table select {
+  vertical-align: middle;
+}
+
+/* Spin animation for loader */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Fade-in for floating toolbar */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+/* Screen-only: hidden when printing */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .print-header {
+    display: block !important;
+    text-align: center;
+    font-size: 10pt;
+    font-weight: bold;
+    border-bottom: 1.5pt solid #333;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+  }
+}
+
+/* By default hide print-only elements on screen */
+.print-only {
+  display: none;
+}
+.print-header {
+  display: none;
+}
+
+/* Recommendations print text — hidden on screen, shown in print */
+.print-rec-text {
+  display: none;
+}
+
+@media print {
+  .print-rec-text {
+    display: block !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    font-size: 8pt;
+    line-height: 1.3;
+    border-top: 0.5pt solid #ccc;
+    padding-top: 2px;
+  }
+}
+
+/* Visually hidden but accessible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ==========================================
+   PRINT STYLES — fit on 1 A4 page, readable
+   ========================================== */
+@media print {
+  @page {
+    size: A4;
+    margin: 5mm 7mm;
+  }
+
+  html, body {
+    font-size: 9pt !important;
+    line-height: 1.15 !important;
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Scale to fit 1 page — zoom changes actual layout size (unlike transform) */
+  /* so the browser paginates correctly at the zoomed height */
+  #root {
+    zoom: 0.68;
+  }
+
+  /* Slightly smaller when recommendations are present */
+  #root:has(.has-recommendations) {
+    zoom: 0.63;
+  }
+
+  /* Force print colors */
+  * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Full width, no decorative padding */
+  .min-h-screen {
+    min-height: auto !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  .bg-linear-to-br {
+    background: white !important;
+  }
+
+  .max-w-7xl {
+    max-width: 100% !important;
+  }
+
+  /* Remove shadows */
+  .shadow-lg {
+    box-shadow: none !important;
+  }
+
+  .rounded-xl {
+    border-radius: 3px !important;
+    border: 0.5pt solid #ddd;
+  }
+
+  /* Compact spacing between sections */
+  .mb-6 {
+    margin-bottom: 4px !important;
+  }
+
+  .mb-4 {
+    margin-bottom: 3px !important;
+  }
+
+  .mb-3 {
+    margin-bottom: 2px !important;
+  }
+
+  .p-6, .p-8 {
+    padding: 6px 8px !important;
+  }
+
+  .p-4 {
+    padding: 4px 6px !important;
+  }
+
+  .gap-4 {
+    gap: 4px !important;
+  }
+
+  .gap-3 {
+    gap: 3px !important;
+  }
+
+  /* Headings — readable */
+  h1 {
+    font-size: 13pt !important;
+    margin: 0 !important;
+  }
+
+  h2 {
+    font-size: 10pt !important;
+    margin: 2px 0 !important;
+  }
+
+  /* Tables — readable */
+  table {
+    font-size: 8pt !important;
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+
+  th, td {
+    padding: 2px 4px !important;
+    border: 0.5pt solid #999 !important;
+    vertical-align: middle !important;
+  }
+
+  /* Clean form inputs for print */
+  select {
+    border: none !important;
+    padding: 0 !important;
+    font-size: 8pt !important;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent !important;
+  }
+
+  input {
+    border: none !important;
+    padding: 0 2px !important;
+    font-size: 9pt !important;
+    background: transparent !important;
+  }
+
+  textarea {
+    border: none !important;
+    padding: 0 !important;
+    font-size: 8pt !important;
+    min-height: auto !important;
+    height: auto !important;
+    overflow: hidden !important;
+    resize: none !important;
+  }
+
+  /* Results section — compact single row */
+  .print-results {
+    padding: 4px 6px !important;
+  }
+
+  .print-results h2 {
+    font-size: 9pt !important;
+    margin-bottom: 3px !important;
+  }
+
+  .print-results .text-2xl,
+  .print-results .text-4xl {
+    font-size: 11pt !important;
+  }
+
+  .print-results .text-3xl {
+    font-size: 9pt !important;
+  }
+
+  .print-results .text-xl,
+  .print-results .text-lg {
+    font-size: 8pt !important;
+  }
+
+  .print-results .text-xs,
+  .print-results .text-sm {
+    font-size: 6pt !important;
+  }
+
+  .bg-linear-to-r {
+    background: #4f46e5 !important;
+    padding: 4px 6px !important;
+  }
+
+  .bg-white\/20 {
+    background: rgba(255,255,255,0.2) !important;
+    padding: 3px 4px !important;
+  }
+
+  /* Force grids to fill width */
+  .grid {
+    display: grid !important;
+  }
+
+  .grid.md\:grid-cols-2,
+  .grid.grid-cols-2 {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 4px 10px !important;
+  }
+
+  .grid.md\:grid-cols-4,
+  .grid.grid-cols-2.md\:grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 4px !important;
+  }
+
+  /* Prevent page breaks inside table rows only */
+  tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Hide full header in print — use compact print-header instead */
+  header {
+    display: none !important;
+  }
+
+  /* col-span fix for results severity box */
+  .col-span-2 {
+    grid-column: span 1 !important;
+  }
+
+  /* Visualization section — compact for print */
+  .print-viz {
+    padding: 2px 4px !important;
+    margin-bottom: 3px !important;
+    page-break-inside: avoid;
+  }
+
+  .print-viz h2 {
+    font-size: 8pt !important;
+    margin-bottom: 1px !important;
+  }
+
+  .print-viz h3 {
+    font-size: 6pt !important;
+    margin-bottom: 0 !important;
+  }
+
+  .print-viz .grid {
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 3px !important;
+  }
+
+  .print-viz svg {
+    max-height: 130px !important;
+  }
+
+  .print-viz .text-xs {
+    font-size: 5pt !important;
+  }
+}
