@@ -21,17 +21,33 @@ const INITIAL_SKIN = {
 const INITIAL_SCALP = { erosions: 0, pigmentation: 0, lesionCount: 0 };
 
 const INITIAL_MUCOSA = {
-  eyes: 0, nose: 0, buccal: 0, hardPalate: 0, softPalate: 0,
-  upperGingiva: 0, lowerGingiva: 0, tongue: 0, floorOfMouth: 0,
-  lips: 0, pharynx: 0, anogenital: 0,
+  eyes: { score: 0, lesionCount: 0 }, nose: { score: 0, lesionCount: 0 },
+  buccal: { score: 0, lesionCount: 0 }, hardPalate: { score: 0, lesionCount: 0 },
+  softPalate: { score: 0, lesionCount: 0 }, upperGingiva: { score: 0, lesionCount: 0 },
+  lowerGingiva: { score: 0, lesionCount: 0 }, tongue: { score: 0, lesionCount: 0 },
+  floorOfMouth: { score: 0, lesionCount: 0 }, lips: { score: 0, lesionCount: 0 },
+  pharynx: { score: 0, lesionCount: 0 }, anogenital: { score: 0, lesionCount: 0 },
 };
 
 const INITIAL_PATIENT = { fullName: '', birthYear: '', diagnosis: '', immunofluorescence: '' };
 
+function migrateMucosa(mucosa) {
+  if (!mucosa) return null;
+  const result = {};
+  for (const [k, v] of Object.entries(mucosa)) {
+    result[k] = typeof v === 'number' ? { score: v, lesionCount: 0 } : v;
+  }
+  return result;
+}
+
 function loadSaved() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed?.mucosa) parsed.mucosa = migrateMucosa(parsed.mucosa);
+      return parsed;
+    }
   } catch { /* ignore */ }
   return null;
 }
@@ -81,9 +97,16 @@ export function useCalculator() {
     });
   };
 
-  const updateMucosa = (area, value) => {
+  const updateMucosa = (area, field, value) => {
     const n = typeof value === 'number' ? value : (value === '' ? 0 : parseInt(value));
-    setMucosa(p => ({ ...p, [area]: isNaN(n) ? 0 : n }));
+    const val = isNaN(n) ? 0 : n;
+    setMucosa(p => {
+      const updated = { ...p, [area]: { ...p[area], [field]: val } };
+      if (field === 'score' && (val === 0 || val >= 5)) {
+        updated[area] = { ...updated[area], lesionCount: 0 };
+      }
+      return updated;
+    });
   };
 
   const reset = () => {

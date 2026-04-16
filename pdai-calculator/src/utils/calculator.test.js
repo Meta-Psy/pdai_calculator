@@ -21,7 +21,7 @@ function emptySkin() {
 
 function emptyMucosa() {
   const keys = ['eyes', 'nose', 'buccal', 'hardPalate', 'softPalate', 'upperGingiva', 'lowerGingiva', 'tongue', 'floorOfMouth', 'lips', 'pharynx', 'anogenital'];
-  return Object.fromEntries(keys.map(k => [k, 0]));
+  return Object.fromEntries(keys.map(k => [k, { score: 0, lesionCount: 0 }]));
 }
 
 const emptyScalp = { erosions: 0, pigmentation: 0, lesionCount: 0 };
@@ -64,7 +64,7 @@ describe('calculateTotals', () => {
     skin.face.pigmentation = 1;
     const scalp = { erosions: 4, pigmentation: 1, lesionCount: 0 };
     const mucosa = emptyMucosa();
-    mucosa.buccal = 10;
+    mucosa.buccal = { score: 10, lesionCount: 0 };
     const t = calculateTotals(skin, scalp, mucosa);
     expect(t.overallSeverity).toBe(24);
     expect(t.overallDamage).toBe(2);

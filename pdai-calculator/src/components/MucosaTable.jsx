@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MUCOSA_KEYS, MUCOSA_SCORES } from '../hooks/useCalculator';
+import { MUCOSA_KEYS, MUCOSA_SCORES, LESION_COUNTS } from '../hooks/useCalculator';
 import ScoreButtons from './ScoreButtons';
 
 export default function MucosaTable({ mucosa, totals, updateMucosa }) {
@@ -29,21 +29,28 @@ export default function MucosaTable({ mucosa, totals, updateMucosa }) {
             <li><strong>5</strong> — {t('mucosa.scale5').replace('5 — ', '')}</li>
             <li><strong>10</strong> — {t('mucosa.scale10').replace('10 — ', '')}</li>
           </ul>
-          <p className="font-bold mt-3 mb-1 text-gray-800">{t('mucosa.note')}</p>
-          <p className="text-gray-700">{t('mucosa.noteText')}</p>
         </div>
       )}
 
       {/* Mobile: card layout */}
       <div className="sm:hidden space-y-2 no-print">
         {MUCOSA_KEYS.map(k => (
-          <div key={k} className={`border rounded-lg p-3 ${mucosa[k] > 0 ? 'border-indigo-300 bg-indigo-50/30' : 'border-gray-200'}`}>
-            <div className="flex items-center justify-between gap-2">
-              <span className="font-medium text-sm text-gray-800 flex items-center gap-1.5 shrink-0">
-                {mucosa[k] > 0 && <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />}
-                {t(`mucosa.${k}`)}
-              </span>
-              <ScoreButtons scores={MUCOSA_SCORES} value={mucosa[k]} onChange={v => updateMucosa(k, v)} />
+          <div key={k} className={`border rounded-lg p-3 ${mucosa[k].score > 0 ? 'border-indigo-300 bg-indigo-50/30' : 'border-gray-200'}`}>
+            <div className="font-medium text-sm text-gray-800 mb-2 flex items-center gap-1.5">
+              {mucosa[k].score > 0 && <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />}
+              {t(`mucosa.${k}`)}
+            </div>
+            <div className="space-y-2">
+              <div>
+                <span className="text-xs text-gray-500 block mb-1">{t('mucosa.colErosions')}</span>
+                <ScoreButtons scores={MUCOSA_SCORES} value={mucosa[k].score} onChange={v => updateMucosa(k, 'score', v)} />
+              </div>
+              {mucosa[k].score > 0 && mucosa[k].score <= 2 && (
+                <div>
+                  <span className="text-xs text-gray-500 block mb-1">{t('mucosa.colLesionCount')}</span>
+                  <ScoreButtons scores={LESION_COUNTS} value={mucosa[k].lesionCount} onChange={v => updateMucosa(k, 'lesionCount', v)} />
+                </div>
+              )}
             </div>
           </div>
         ))}
@@ -60,6 +67,7 @@ export default function MucosaTable({ mucosa, totals, updateMucosa }) {
             <tr className="bg-indigo-50">
               <th className="border p-2 text-left">{t('mucosa.colLocation')}</th>
               <th className="border p-2 text-center">{t('mucosa.colErosions')}</th>
+              <th className="border p-2 text-center">{t('mucosa.colLesionCount')}</th>
             </tr>
           </thead>
           <tbody>
@@ -74,21 +82,28 @@ export default function MucosaTable({ mucosa, totals, updateMucosa }) {
               >
                 <td className="border px-2">
                   <span className="flex items-center gap-1.5">
-                    {mucosa[k] > 0 && <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />}
+                    {mucosa[k].score > 0 && <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />}
                     {t(`mucosa.${k}`)}
                   </span>
                 </td>
                 <td className="border px-2">
                   <div className="no-print">
-                    <ScoreButtons scores={MUCOSA_SCORES} value={mucosa[k]} onChange={v => updateMucosa(k, v)} />
+                    <ScoreButtons scores={MUCOSA_SCORES} value={mucosa[k].score} onChange={v => updateMucosa(k, 'score', v)} />
                   </div>
-                  <div className="hidden print-only text-center">{mucosa[k]}</div>
+                  <div className="hidden print-only text-center">{mucosa[k].score}</div>
+                </td>
+                <td className="border px-2">
+                  <div className="no-print">
+                    <ScoreButtons scores={LESION_COUNTS} value={mucosa[k].lesionCount} onChange={v => updateMucosa(k, 'lesionCount', v)} disabled={mucosa[k].score === 0 || mucosa[k].score > 2} />
+                  </div>
+                  <div className="hidden print-only text-center">{mucosa[k].lesionCount || ''}</div>
                 </td>
               </tr>
             ))}
             <tr className="bg-indigo-100 font-bold">
               <td className="border p-2">{t('mucosa.totalMucosa')}</td>
               <td className="border p-2 text-center">{totals.mucosaTotal}</td>
+              <td className="border p-2 text-center"></td>
             </tr>
           </tbody>
         </table>

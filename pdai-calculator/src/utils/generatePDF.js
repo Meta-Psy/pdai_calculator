@@ -31,7 +31,8 @@ function zc(area) {
 }
 
 function mc(val) {
-  return val > 0 ? '#ef4444' : '#d1d5db';
+  const v = typeof val === 'object' ? val.score : val;
+  return v > 0 ? '#ef4444' : '#d1d5db';
 }
 
 // Common text attributes: text-anchor centers horizontally, dy="0.35em" centers vertically
@@ -174,7 +175,7 @@ function buildHTML(data) {
 
   // Mucosa rows
   const mucosaRows = MUCOSA_KEYS.map(k =>
-    tableRow([esc(t(`mucosa.${k}`)), mucosa[k]])
+    tableRow([esc(t(`mucosa.${k}`)), mucosa[k].score, mucosa[k].lesionCount || ''])
   ).join('');
 
   return `
@@ -213,9 +214,9 @@ function buildHTML(data) {
 
           <div style="font-size:10px;font-weight:bold;margin-bottom:5px;color:#312e81;">${esc(t('mucosa.title'))}</div>
           <table style="width:100%;border-collapse:collapse;font-size:8px;">
-            ${tableRow([esc(t('mucosa.colLocation')), esc(t('mucosa.colErosions'))], true, '#e0e7ff')}
+            ${tableRow([esc(t('mucosa.colLocation')), esc(t('mucosa.colErosions')), esc(t('mucosa.colLesionCount'))], true, '#e0e7ff')}
             ${mucosaRows}
-            ${tableRow([esc(t('mucosa.totalMucosa')), totals.mucosaTotal], false, '#c7d2fe')}
+            ${tableRow([esc(t('mucosa.totalMucosa')), totals.mucosaTotal, ''], false, '#c7d2fe')}
           </table>
         </div>
       </div>
