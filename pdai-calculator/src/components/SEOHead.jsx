@@ -22,12 +22,17 @@ export default function SEOHead() {
       <meta property="og:description" content={t('meta.description')} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content="PDAI Calculator — Skin Lab Pro" />
-      <meta property="og:locale" content={currentLang === 'ru' ? 'ru_RU' : currentLang === 'uz' ? 'uz_UZ' : currentLang === 'kk' ? 'kk_KK' : 'en_US'} />
+      <meta property="og:locale" content={currentLang === 'ru' ? 'ru_RU' : currentLang === 'uz' ? 'uz_UZ' : currentLang === 'kk' ? 'kk_KZ' : 'en_US'} />
+      <meta property="og:image" content={`${SITE_URL}/og.png`} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content="PDAI Calculator — Pemphigus Disease Area Index — skinlabpro.uz" />
 
       {/* Twitter/X Card */}
-      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={t('meta.title')} />
       <meta name="twitter:description" content={t('meta.description')} />
+      <meta name="twitter:image" content={`${SITE_URL}/og.png`} />
 
       {/* Hreflang */}
       {LANGS.map(l => (
