@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="Arial, Helvetica, sans-serif">
+  <rect width="1200" height="630" fill="#0f172a"/>
+  <text x="80" y="250" fill="#818cf8" font-size="26" font-weight="700" letter-spacing="3">CLINICAL SCORING</text>
+  <text x="78" y="330" fill="#ffffff" font-size="72" font-weight="800">PDAI Calculator</text>
+  <text x="80" y="385" fill="#94a3b8" font-size="32">Pemphigus Disease Area Index</text>
+  <text x="80" y="470" fill="#cbd5e1" font-size="24" font-weight="600">skinlabpro.uz · Skin Lab Pro</text>
+  <g transform="translate(965 315)">
+    <circle r="150" fill="none" stroke="#1e293b" stroke-width="34"/>
+    <circle r="150" fill="none" stroke="#6366f1" stroke-width="34" stroke-linecap="round"
+            stroke-dasharray="640 943" transform="rotate(-90)"/>
+    <text x="0" y="-2" text-anchor="middle" fill="#ffffff" font-size="58" font-weight="900">0–250</text>
+    <text x="0" y="34" text-anchor="middle" fill="#94a3b8" font-size="20">severity range</text>
+  </g>
+</svg>
