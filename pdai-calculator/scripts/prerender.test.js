@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { escAttr, extractViteAssetTags, buildJsonLd, renderDocument } from './prerender.mjs';
+import { escAttr, extractViteAssetTags, buildJsonLd, renderDocument, buildSitemap } from './prerender.mjs';
 
 const SHELL = `<!doctype html>
 <html lang="ru">
@@ -102,6 +102,24 @@ describe('renderDocument', () => {
   });
   it('keeps body untouched', () => {
     expect(html).toContain('<body>\n    <div id="root"></div>\n  </body>');
+  });
+});
+
+describe('buildSitemap', () => {
+  const cfg = { SITE:'https://skinlabpro.uz', LANGS:['ru','en','uz','kk'], DEFAULT_LANG:'en' };
+  const xml = buildSitemap(cfg, '2026-05-19');
+  it('one <url> per lang with loc and lastmod', () => {
+    expect((xml.match(/<loc>/g) || []).length).toBe(4);
+    expect(xml).toContain('<loc>https://skinlabpro.uz/ru</loc>');
+    expect((xml.match(/<lastmod>2026-05-19<\/lastmod>/g) || []).length).toBe(4);
+  });
+  it('each url has full hreflang alternates incl x-default', () => {
+    expect(xml).toContain('<xhtml:link rel="alternate" hreflang="x-default" href="https://skinlabpro.uz/en"/>');
+    expect((xml.match(/hreflang="uz"/g) || []).length).toBe(4); // 4 url × 1 each
+  });
+  it('valid urlset envelope', () => {
+    expect(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>')).toBe(true);
+    expect(xml).toContain('xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"');
   });
 });
 

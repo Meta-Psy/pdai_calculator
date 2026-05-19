@@ -102,3 +102,22 @@ export function renderDocument(shellHtml, { lang, title, description, cfg }) {
   out = out.replace(/<head>[\s\S]*?<\/head>/, `<head>\n${head}\n  </head>`);
   return out;
 }
+
+export function buildSitemap(cfg, lastmod) {
+  const alts = cfg.LANGS
+    .map(l => `    <xhtml:link rel="alternate" hreflang="${l}" href="${cfg.SITE}/${l}"/>`)
+    .concat(`    <xhtml:link rel="alternate" hreflang="x-default" href="${cfg.SITE}/${cfg.DEFAULT_LANG}"/>`)
+    .join('\n');
+  const urls = cfg.LANGS.map(l =>
+`  <url>
+    <loc>${cfg.SITE}/${l}</loc>
+    <lastmod>${lastmod}</lastmod>
+${alts}
+  </url>`).join('\n');
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${urls}
+</urlset>
+`;
+}
