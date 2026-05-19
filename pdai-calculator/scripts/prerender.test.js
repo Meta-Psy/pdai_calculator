@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { escAttr, extractViteAssetTags } from './prerender.mjs';
+import { escAttr, extractViteAssetTags, buildJsonLd } from './prerender.mjs';
 
 const SHELL = `<!doctype html>
 <html lang="ru">
@@ -42,6 +42,18 @@ describe('extractViteAssetTags', () => {
   it('throws if no asset tags found (build would ship broken JS)', () => {
     expect(() => extractViteAssetTags('<html><head></head><body></body></html>'))
       .toThrow(/no Vite asset tags/i);
+  });
+});
+
+describe('buildJsonLd', () => {
+  it('localizes description and inLanguage per lang', () => {
+    const json = buildJsonLd('uz', 'Bepul onlayn PDAI kalkulyatori');
+    const obj = JSON.parse(json);
+    expect(obj['@type']).toBe('MedicalWebPage');
+    expect(obj.description).toBe('Bepul onlayn PDAI kalkulyatori');
+    expect(obj.inLanguage).toEqual(['uz']);
+    expect(obj.creator.url).toBe('https://skinlabpro.uz');
+    expect(obj.about.alternateName).toBe('Пузырчатка');
   });
 });
 
