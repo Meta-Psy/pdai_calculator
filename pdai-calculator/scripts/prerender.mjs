@@ -1,4 +1,7 @@
 // Build-time prerender: per-language static <head>. Без npm-зависимостей.
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { dirname, join } from 'node:path';
 
 export function escAttr(s) {
   return String(s)
@@ -120,4 +123,45 @@ ${alts}
 ${urls}
 </urlset>
 `;
+}
+
+export async function runMain() {
+  const here = dirname(fileURLToPath(import.meta.url)); // pdai-calculator/scripts
+  const root = join(here, '..');                        // pdai-calculator
+  const distDir = join(root, 'dist');
+  const cfg = await import(pathToFileURL(join(root, 'seo.config.js')).href);
+
+  const shell = readFileSync(join(distDir, 'index.html'), 'utf8');
+  const date = new Date().toISOString().slice(0, 10);
+
+  for (const lang of cfg.LANGS) {
+    const i18nPath = join(root, 'src', 'i18n', `${lang}.json`);
+    const i18n = JSON.parse(readFileSync(i18nPath, 'utf8'));
+    const title = i18n?.meta?.title;
+    const description = i18n?.meta?.description;
+    if (!title || !description) {
+      console.error(`prerender: missing meta.title/description in ${lang}.json`);
+      process.exit(1);
+    }
+    const htmlDoc = renderDocument(shell, { lang, title, description, cfg });
+    mkdirSync(join(distDir, lang), { recursive: true });
+    writeFileSync(join(distDir, lang, 'index.html'), htmlDoc, 'utf8');
+  }
+
+  // Корень / → x-default (DEFAULT_LANG). Тело SPA редиректит людей на /ru.
+  const dl = cfg.DEFAULT_LANG;
+  const di = JSON.parse(readFileSync(join(root, 'src', 'i18n', `${dl}.json`), 'utf8'));
+  writeFileSync(
+    join(distDir, 'index.html'),
+    renderDocument(shell, { lang: dl, title: di.meta.title, description: di.meta.description, cfg }),
+    'utf8'
+  );
+
+  writeFileSync(join(distDir, 'sitemap.xml'), buildSitemap(cfg, date), 'utf8');
+  console.log(`prerender: wrote ${cfg.LANGS.length} lang pages + root + sitemap (lastmod ${date})`);
+}
+
+// Запуск только при прямом вызове (node scripts/prerender.mjs), не при import из теста.
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  runMain();
 }
