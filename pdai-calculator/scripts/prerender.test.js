@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { escAttr, extractViteAssetTags, buildJsonLd } from './prerender.mjs';
+import { escAttr, extractViteAssetTags, buildJsonLd, renderDocument } from './prerender.mjs';
 
 const SHELL = `<!doctype html>
 <html lang="ru">
@@ -54,6 +54,54 @@ describe('buildJsonLd', () => {
     expect(obj.inLanguage).toEqual(['uz']);
     expect(obj.creator.url).toBe('https://skinlabpro.uz');
     expect(obj.about.alternateName).toBe('Пузырчатка');
+  });
+});
+
+describe('renderDocument', () => {
+  const cfg = {
+    SITE: 'https://skinlabpro.uz', LANGS: ['ru','en','uz','kk'], DEFAULT_LANG: 'en',
+    OG_IMAGE: '/og.png', OG_IMAGE_ALT: 'alt text', SITE_NAME: 'PDAI Calculator — Skin Lab Pro',
+    OG_LOCALE: { ru:'ru_RU', en:'en_US', uz:'uz_UZ', kk:'kk_KZ' },
+    YANDEX_VERIFICATION: 'yatoken', GOOGLE_VERIFICATION: '',
+  };
+  const html = renderDocument(SHELL, { lang: 'uz', title: 'UZ Title', description: 'UZ Desc "x"', cfg });
+
+  it('rewrites <html lang>', () => {
+    expect(html).toContain('<html lang="uz">');
+    expect(html).not.toContain('<html lang="ru">');
+  });
+  it('injects localized title and escaped description', () => {
+    expect(html).toContain('<title>UZ Title</title>');
+    expect(html).toContain('<meta name="description" content="UZ Desc &quot;x&quot;" />');
+  });
+  it('sets canonical and og:url per lang', () => {
+    expect(html).toContain('<link rel="canonical" href="https://skinlabpro.uz/uz" />');
+    expect(html).toContain('<meta property="og:url" content="https://skinlabpro.uz/uz" />');
+  });
+  it('emits absolute og:image + large twitter card + og:locale', () => {
+    expect(html).toContain('<meta property="og:image" content="https://skinlabpro.uz/og.png" />');
+    expect(html).toContain('<meta name="twitter:card" content="summary_large_image" />');
+    expect(html).toContain('<meta property="og:locale" content="uz_UZ" />');
+  });
+  it('emits 4 hreflang + x-default→/en', () => {
+    for (const l of ['ru','en','uz','kk']) {
+      expect(html).toContain(`<link rel="alternate" hreflang="${l}" href="https://skinlabpro.uz/${l}" />`);
+    }
+    expect(html).toContain('<link rel="alternate" hreflang="x-default" href="https://skinlabpro.uz/en" />');
+  });
+  it('emits verification meta only when token non-empty', () => {
+    expect(html).toContain('<meta name="yandex-verification" content="yatoken" />');
+    expect(html).not.toContain('google-site-verification');
+  });
+  it('preserves Vite asset tags verbatim', () => {
+    expect(html).toContain('<script type="module" crossorigin src="/assets/index-BbW19ylY.js"></script>');
+    expect(html).toContain('<link rel="stylesheet" crossorigin href="/assets/index-TcJyCJzP.css">');
+  });
+  it('localized JSON-LD inLanguage', () => {
+    expect(html).toContain('"inLanguage": [\n    "uz"\n  ]');
+  });
+  it('keeps body untouched', () => {
+    expect(html).toContain('<body>\n    <div id="root"></div>\n  </body>');
   });
 });
 

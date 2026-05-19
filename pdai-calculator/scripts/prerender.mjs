@@ -49,3 +49,56 @@ export function buildJsonLd(lang, localizedDescription) {
   };
   return JSON.stringify(obj, null, 2);
 }
+
+export function renderDocument(shellHtml, { lang, title, description, cfg }) {
+  const assetTags = extractViteAssetTags(shellHtml);
+  const url = `${cfg.SITE}/${lang}`;
+  const ogImage = `${cfg.SITE}${cfg.OG_IMAGE}`;
+  const t = escAttr(title);
+  const d = escAttr(description);
+
+  const verification = [];
+  if (cfg.YANDEX_VERIFICATION) {
+    verification.push(`<meta name="yandex-verification" content="${escAttr(cfg.YANDEX_VERIFICATION)}" />`);
+  }
+  if (cfg.GOOGLE_VERIFICATION) {
+    verification.push(`<meta name="google-site-verification" content="${escAttr(cfg.GOOGLE_VERIFICATION)}" />`);
+  }
+
+  const hreflang = cfg.LANGS
+    .map(l => `<link rel="alternate" hreflang="${l}" href="${cfg.SITE}/${l}" />`)
+    .concat(`<link rel="alternate" hreflang="x-default" href="${cfg.SITE}/${cfg.DEFAULT_LANG}" />`);
+
+  const head = [
+    '<meta charset="UTF-8" />',
+    '<meta name="viewport" content="width=device-width, initial-scale=1.0" />',
+    '<link rel="icon" type="image/svg+xml" href="/favicon.svg" />',
+    ...verification,
+    '<meta name="robots" content="index, follow" />',
+    '<meta name="author" content="Skin Lab Pro" />',
+    `<title>${t}</title>`,
+    `<meta name="description" content="${d}" />`,
+    `<link rel="canonical" href="${url}" />`,
+    '<meta property="og:type" content="website" />',
+    `<meta property="og:title" content="${t}" />`,
+    `<meta property="og:description" content="${d}" />`,
+    `<meta property="og:url" content="${url}" />`,
+    `<meta property="og:site_name" content="${escAttr(cfg.SITE_NAME)}" />`,
+    `<meta property="og:locale" content="${cfg.OG_LOCALE[lang]}" />`,
+    `<meta property="og:image" content="${ogImage}" />`,
+    '<meta property="og:image:width" content="1200" />',
+    '<meta property="og:image:height" content="630" />',
+    `<meta property="og:image:alt" content="${escAttr(cfg.OG_IMAGE_ALT)}" />`,
+    '<meta name="twitter:card" content="summary_large_image" />',
+    `<meta name="twitter:title" content="${t}" />`,
+    `<meta name="twitter:description" content="${d}" />`,
+    `<meta name="twitter:image" content="${ogImage}" />`,
+    ...hreflang,
+    `<script type="application/ld+json">\n${buildJsonLd(lang, description)}\n</script>`,
+    ...assetTags,
+  ].map(line => '    ' + line).join('\n');
+
+  let out = shellHtml.replace(/<html lang="[^"]*">/, `<html lang="${lang}">`);
+  out = out.replace(/<head>[\s\S]*?<\/head>/, `<head>\n${head}\n  </head>`);
+  return out;
+}
