@@ -1,14 +1,16 @@
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-
-const SITE_URL = 'https://skinlabpro.uz';
-const LANGS = ['ru', 'en', 'uz', 'kk'];
+import {
+  SITE, LANGS, DEFAULT_LANG, OG_IMAGE, OG_IMAGE_ALT, OG_LOCALE, SITE_NAME,
+} from '../../seo.config.js';
 
 export default function SEOHead() {
   const { t, i18n } = useTranslation();
   const { lang } = useParams();
   const currentLang = lang || i18n.language;
-  const canonicalUrl = `${SITE_URL}/${currentLang}`;
+  const canonicalUrl = `${SITE}/${currentLang}`;
+  const ogImage = `${SITE}${OG_IMAGE}`;
+  const ogLocale = OG_LOCALE[currentLang] ?? OG_LOCALE[DEFAULT_LANG];
 
   return (
     <>
@@ -21,24 +23,25 @@ export default function SEOHead() {
       <meta property="og:title" content={t('meta.title')} />
       <meta property="og:description" content={t('meta.description')} />
       <meta property="og:url" content={canonicalUrl} />
-      <meta property="og:site_name" content="PDAI Calculator — Skin Lab Pro" />
-      <meta property="og:locale" content={currentLang === 'ru' ? 'ru_RU' : currentLang === 'uz' ? 'uz_UZ' : currentLang === 'kk' ? 'kk_KZ' : 'en_US'} />
-      <meta property="og:image" content={`${SITE_URL}/og.png`} />
+      <meta property="og:site_name" content={SITE_NAME} />
+      <meta property="og:locale" content={ogLocale} />
+      <meta property="og:image" content={ogImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content="PDAI Calculator — Pemphigus Disease Area Index — skinlabpro.uz" />
+      <meta property="og:image:alt" content={OG_IMAGE_ALT} />
 
       {/* Twitter/X Card */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={t('meta.title')} />
       <meta name="twitter:description" content={t('meta.description')} />
-      <meta name="twitter:image" content={`${SITE_URL}/og.png`} />
+      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image:alt" content={OG_IMAGE_ALT} />
 
       {/* Hreflang */}
       {LANGS.map(l => (
-        <link key={l} rel="alternate" hrefLang={l} href={`${SITE_URL}/${l}`} />
+        <link key={l} rel="alternate" hrefLang={l} href={`${SITE}/${l}`} />
       ))}
-      <link rel="alternate" hrefLang="x-default" href={`${SITE_URL}/en`} />
+      <link rel="alternate" hrefLang="x-default" href={`${SITE}/${DEFAULT_LANG}`} />
     </>
   );
 }
