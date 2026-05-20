@@ -50,7 +50,9 @@ export function buildJsonLd(lang, localizedDescription) {
     inLanguage: [lang],
     isAccessibleForFree: true,
   };
-  return JSON.stringify(obj, null, 2);
+  // Escape `<` to prevent premature </script> if any input ever contains it.
+  // Defensive — current inputs are static, but this closes the entire vector.
+  return JSON.stringify(obj, null, 2).replace(/</g, '\\u003C');
 }
 
 export function renderDocument(shellHtml, { lang, title, description, cfg }) {
@@ -96,6 +98,7 @@ export function renderDocument(shellHtml, { lang, title, description, cfg }) {
     `<meta name="twitter:title" content="${t}" />`,
     `<meta name="twitter:description" content="${d}" />`,
     `<meta name="twitter:image" content="${ogImage}" />`,
+    `<meta name="twitter:image:alt" content="${escAttr(cfg.OG_IMAGE_ALT)}" />`,
     ...hreflang,
     `<script type="application/ld+json">\n${buildJsonLd(lang, description)}\n</script>`,
     ...assetTags,

@@ -55,6 +55,13 @@ describe('buildJsonLd', () => {
     expect(obj.creator.url).toBe('https://skinlabpro.uz');
     expect(obj.about.alternateName).toBe('Пузырчатка');
   });
+  it('escapes `<` to prevent premature </script> inside JSON-LD', () => {
+    const json = buildJsonLd('en', 'pre </script> attack');
+    expect(json).not.toContain('</script>');
+    expect(json).toContain('\\u003C/script>');
+    // JSON.parse still recovers the original string (escape is JSON-safe).
+    expect(JSON.parse(json).description).toBe('pre </script> attack');
+  });
 });
 
 describe('renderDocument', () => {
@@ -78,10 +85,11 @@ describe('renderDocument', () => {
     expect(html).toContain('<link rel="canonical" href="https://skinlabpro.uz/uz" />');
     expect(html).toContain('<meta property="og:url" content="https://skinlabpro.uz/uz" />');
   });
-  it('emits absolute og:image + large twitter card + og:locale', () => {
+  it('emits absolute og:image + large twitter card + og:locale + twitter:image:alt', () => {
     expect(html).toContain('<meta property="og:image" content="https://skinlabpro.uz/og.png" />');
     expect(html).toContain('<meta name="twitter:card" content="summary_large_image" />');
     expect(html).toContain('<meta property="og:locale" content="uz_UZ" />');
+    expect(html).toContain('<meta name="twitter:image:alt" content="alt text" />');
   });
   it('emits 4 hreflang + x-default→/en', () => {
     for (const l of ['ru','en','uz','kk']) {
