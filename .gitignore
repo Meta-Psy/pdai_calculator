@@ -1,3 +1,6 @@
 .vscode/
 *.docx
 *.local
+.superpowers/
+.claude/
+.claudeignore
