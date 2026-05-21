@@ -15,7 +15,8 @@ import Recommendations from './components/Recommendations';
 import InfoSection from './components/InfoSection';
 import StickyResults from './components/StickyResults';
 import FloatingToolbar from './components/FloatingToolbar';
-import { CalculatorIcon, Printer, Download, Loader, RefreshCw } from './components/icons';
+import { Printer, Download, Loader, RefreshCw } from './components/icons';
+import Logo from './components/Logo';
 import { useCalculator } from './hooks/useCalculator';
 import { generatePDF } from './utils/generatePDF';
 
@@ -73,9 +74,7 @@ export default function App() {
           <header className="bg-white rounded-xl shadow-lg p-4 md:p-6 mb-6">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="bg-indigo-600 p-2.5 md:p-3 rounded-lg text-white shrink-0">
-                  <CalculatorIcon />
-                </div>
+                <Logo className="w-12 h-12 md:w-14 md:h-14 shrink-0" />
                 <div>
                   <h1 className="text-2xl md:text-3xl font-bold text-gray-800">{t('header.title')}</h1>
                   <p className="text-gray-500 text-xs md:text-sm">{t('header.subtitle')} <span className="text-gray-400">| {t('header.by')}</span></p>
