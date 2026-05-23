@@ -2,5 +2,6 @@
 *.docx
 *.local
 .superpowers/
-.claude/
+.claude/*
+!.claude/settings.json
 .claudeignore
