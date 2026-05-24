@@ -5,3 +5,6 @@
 .claude/*
 !.claude/settings.json
 .claudeignore
+
+# GitNexus graph index (local-only, regenerated per machine)
+.gitnexus/
