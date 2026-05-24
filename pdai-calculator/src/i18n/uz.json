@@ -105,6 +105,7 @@
     "noteText": "Shilliq qavatlar uchun o'choqlar soni asosiy bahoda hisobga olinadi. Qo'shimcha o'choq sanash talab qilinmaydi.",
     "colLocation": "Anatomik joylashuv",
     "colErosions": "Eroziyalar/Pufaklar",
+    "colLesionCount": "O'choqlar soni ≤3 bo'lsa",
     "totalMucosa": "Barcha shilliq qavat:",
     "eyes": "Ko'zlar",
     "nose": "Burun",

@@ -12,7 +12,8 @@ function zc(area) {
 }
 
 function mc(val) {
-  return val > 0 ? R : D;
+  const v = typeof val === 'object' ? val.score : val;
+  return v > 0 ? R : D;
 }
 
 /** Pattern fill URL for colorblind accessibility overlay */
@@ -23,7 +24,8 @@ function pat(area) {
 }
 
 function mcPat(val) {
-  return val > 0 ? 'url(#pat-erosion)' : null;
+  const v = typeof val === 'object' ? val.score : val;
+  return v > 0 ? 'url(#pat-erosion)' : null;
 }
 
 /** Text props: white halo for contrast + vertical centering */
@@ -46,15 +48,15 @@ export default function BodyVisualization({ skinAreas, scalp, mucosa }) {
     skinAreas.face.erosions > 0 ? `${t('skin.face')}: ${t('visualization.affected')}` : skinAreas.face.pigmentation > 0 ? `${t('skin.face')}: ${t('visualization.pigmentation')}` : null,
     skinAreas.ears.erosions > 0 ? `${t('skin.ears')}: ${t('visualization.affected')}` : skinAreas.ears.pigmentation > 0 ? `${t('skin.ears')}: ${t('visualization.pigmentation')}` : null,
     skinAreas.neck.erosions > 0 ? `${t('skin.neck')}: ${t('visualization.affected')}` : skinAreas.neck.pigmentation > 0 ? `${t('skin.neck')}: ${t('visualization.pigmentation')}` : null,
-    mucosa.eyes > 0 ? `${t('mucosa.eyes')}: ${t('visualization.affected')}` : null,
-    mucosa.nose > 0 ? `${t('mucosa.nose')}: ${t('visualization.affected')}` : null,
-    mucosa.anogenital > 0 ? `${t('mucosa.anogenital')}: ${t('visualization.affected')}` : null,
+    mucosa.eyes.score > 0 ? `${t('mucosa.eyes')}: ${t('visualization.affected')}` : null,
+    mucosa.nose.score > 0 ? `${t('mucosa.nose')}: ${t('visualization.affected')}` : null,
+    mucosa.anogenital.score > 0 ? `${t('mucosa.anogenital')}: ${t('visualization.affected')}` : null,
   ].filter(Boolean).join('; ') || t('visualization.normal');
 
   const oralDesc = [
     'lips', 'hardPalate', 'softPalate', 'upperGingiva', 'lowerGingiva',
     'buccal', 'tongue', 'floorOfMouth', 'pharynx',
-  ].filter(k => mucosa[k] > 0).map(k => t(`mucosa.${k}`)).join(', ') || t('visualization.normal');
+  ].filter(k => mucosa[k].score > 0).map(k => t(`mucosa.${k}`)).join(', ') || t('visualization.normal');
 
   const bodyDesc = [
     'chest', 'abdomen', 'back', 'arms', 'hands', 'legs', 'feet', 'genitals',

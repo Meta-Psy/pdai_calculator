@@ -10,7 +10,7 @@ export function calculateTotals(skinAreas, scalp, mucosa) {
   const se = Object.values(skinAreas).reduce((s, a) => s + a.erosions, 0);
   const sp = Object.values(skinAreas).reduce((s, a) => s + a.pigmentation, 0);
   const sl = Object.values(skinAreas).reduce((s, a) => s + calculateLesionScore(a.lesionCount), 0);
-  const mt = Object.values(mucosa).reduce((s, v) => s + v, 0);
+  const mt = Object.values(mucosa).reduce((s, v) => s + v.score, 0);
   const scl = calculateLesionScore(scalp.lesionCount);
 
   // Activity calculation: lesion count REPLACES erosion value of 1 (per Rosenbach 2009)

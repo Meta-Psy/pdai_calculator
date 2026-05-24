@@ -105,6 +105,7 @@
     "noteText": "For mucous membranes, the number of lesions is included in the main score. Additional lesion counting is not required.",
     "colLocation": "Anatomical Location",
     "colErosions": "Erosions/Blisters",
+    "colLesionCount": "Lesion count if ≤3",
     "totalMucosa": "Total mucous membranes:",
     "eyes": "Eyes",
     "nose": "Nose",
