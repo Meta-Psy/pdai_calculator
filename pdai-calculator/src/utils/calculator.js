@@ -29,8 +29,15 @@ export function calculateTotals(skinAreas, scalp, mucosa) {
   };
 }
 
-export function getSeverityLevel(score) {
-  if (score < 15) return 'mild';
-  if (score < 45) return 'moderate';
+// Single source of truth for the mild/moderate/severe cutoffs.
+export const SEVERITY_THRESHOLDS = { mild: 15, moderate: 45 };
+
+export function getSeverityBand(score) {
+  if (score < SEVERITY_THRESHOLDS.mild) return 'mild';
+  if (score < SEVERITY_THRESHOLDS.moderate) return 'moderate';
   return 'severe';
+}
+
+export function getSeverityLevel(score) {
+  return getSeverityBand(score);
 }

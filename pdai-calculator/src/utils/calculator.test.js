@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateLesionScore, calculateTotals, getSeverityLevel } from './calculator.js';
+import { calculateLesionScore, calculateTotals, getSeverityLevel, getSeverityBand, SEVERITY_THRESHOLDS } from './calculator.js';
 
 describe('calculateLesionScore', () => {
   it('returns 0/1/1.3/1.6 for counts 0/1/2/3', () => {
@@ -79,5 +79,25 @@ describe('getSeverityLevel', () => {
     expect(getSeverityLevel(15)).toBe('moderate');
     expect(getSeverityLevel(44.9)).toBe('moderate');
     expect(getSeverityLevel(45)).toBe('severe');
+  });
+});
+
+describe('SEVERITY_THRESHOLDS', () => {
+  it('exposes the mild/moderate cutoffs as the single source of truth', () => {
+    expect(SEVERITY_THRESHOLDS).toEqual({ mild: 15, moderate: 45 });
+  });
+});
+
+describe('getSeverityBand', () => {
+  it('returns the band index at the 15/45 boundaries', () => {
+    expect(getSeverityBand(0)).toBe('mild');
+    expect(getSeverityBand(14.9)).toBe('mild');
+    expect(getSeverityBand(15)).toBe('moderate');
+    expect(getSeverityBand(44.9)).toBe('moderate');
+    expect(getSeverityBand(45)).toBe('severe');
+  });
+
+  it('is the same function backing getSeverityLevel', () => {
+    expect(getSeverityLevel(20)).toBe(getSeverityBand(20));
   });
 });

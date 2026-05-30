@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { calculateTotals } from '../utils/calculator.js';
+import { calculateTotals, getSeverityBand } from '../utils/calculator.js';
 
 const STORAGE_KEY = 'pdai-calculator-data';
 
@@ -119,9 +119,12 @@ export function useCalculator() {
   };
 
   const getSeverity = (score, t) => {
-    if (score < 15) return { level: t('results.mild'), color: 'text-green-700 bg-green-50 border-green-300', iconType: 'check' };
-    if (score < 45) return { level: t('results.moderate'), color: 'text-yellow-700 bg-yellow-50 border-yellow-300', iconType: 'alert' };
-    return { level: t('results.severe'), color: 'text-red-700 bg-red-50 border-red-300', iconType: 'x' };
+    const styles = {
+      mild: { level: t('results.mild'), color: 'text-green-700 bg-green-50 border-green-300', iconType: 'check' },
+      moderate: { level: t('results.moderate'), color: 'text-yellow-700 bg-yellow-50 border-yellow-300', iconType: 'alert' },
+      severe: { level: t('results.severe'), color: 'text-red-700 bg-red-50 border-red-300', iconType: 'x' },
+    };
+    return styles[getSeverityBand(score)];
   };
 
   return {
