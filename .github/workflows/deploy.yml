@@ -2,7 +2,8 @@ name: CI/CD
 
 on:
   push:
-    branches: [master]
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
   check:
@@ -26,6 +27,10 @@ jobs:
 
   deploy:
     needs: check
+    # Manual only until the new server is provisioned (SSH key + deploy user +
+    # hardening). Keeps `check` as the meaningful push signal instead of a
+    # permanently-red SSH timeout. Re-enable push-deploy once the server is ready.
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Deploy via SSH
@@ -37,8 +42,8 @@ jobs:
           script: |
             set -e
             cd ~/app
-            git fetch origin master
-            git reset --hard origin/master
+            git fetch origin main
+            git reset --hard origin/main
             cd pdai-calculator
             docker compose build --no-cache
             docker compose up -d --force-recreate
