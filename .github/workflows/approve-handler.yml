@@ -1,0 +1,57 @@
+name: approve-handler
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  handle:
+    # Only on issues (not PRs) carrying the audit label, and only /approve comments.
+    if: >
+      github.event.issue.pull_request == null &&
+      contains(github.event.issue.labels.*.name, 'audit-report') &&
+      startsWith(github.event.comment.body, '/approve')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { handleApproveComment } = await import(
+              `${process.env.GITHUB_WORKSPACE}/pdai-calculator/scripts/ci/parse-approve.mjs`
+            )
+            const result = handleApproveComment({
+              author: context.payload.comment.user.login,
+              commentBody: context.payload.comment.body,
+              issueBody: context.payload.issue.body || '',
+            })
+            const issue_number = context.payload.issue.number
+            const base = { owner: context.repo.owner, repo: context.repo.repo, issue_number }
+
+            if (result.action === 'ignore') return
+            if (result.action === 'reject') {
+              await github.rest.issues.createComment({ ...base,
+                body: `🚫 \`/approve\` ignored: \`@${result.author}\` is not an authorized approver.` })
+              return
+            }
+            if (result.action === 'error') {
+              await github.rest.issues.createComment({ ...base,
+                body: `⚠️ Could not find a valid \`AUDIT-MANIFEST\` in this issue. Approve aborted.` })
+              return
+            }
+            const fmt = arr => arr.map(i => `#${i.n} [${i.category}] ${i.title}`).join('\n') || '—'
+            let body = `✅ Approved by \`@${context.payload.comment.user.login}\`.\n\n`
+            body += `**Eligible for implementation:**\n${fmt(result.eligible)}\n\n`
+            if (result.skippedComplex.length) {
+              body += `**Skipped (COMPLEX — needs manual brainstorm, never auto):**\n${fmt(result.skippedComplex)}\n\n`
+            }
+            if (result.unknown?.length) {
+              body += `**Unknown item numbers (ignored):** ${result.unknown.join(', ')}\n\n`
+            }
+            body += `_E.0-A: trigger an Implementer manually against the eligible list. Automated dispatch arrives in E.1._`
+            await github.rest.issues.addLabels({ ...base, labels: ['approved'] })
+            await github.rest.issues.createComment({ ...base, body })
