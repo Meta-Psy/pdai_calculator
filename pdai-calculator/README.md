@@ -19,6 +19,9 @@ Vite + React, Tailwind CSS, react-i18next
 ```bash
 npm install
 npm run dev
+npm test
+npm run lint
+npm run build
 ```
 
 ## Reference
