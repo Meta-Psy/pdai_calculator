@@ -22,7 +22,7 @@ jobs:
         with:
           script: |
             const { handleApproveComment } = await import(
-              `${process.env.GITHUB_WORKSPACE}/scripts/ci/parse-approve.mjs`
+              `${process.env.GITHUB_WORKSPACE}/pdai-calculator/scripts/ci/parse-approve.mjs`
             )
             const result = handleApproveComment({
               author: context.payload.comment.user.login,
