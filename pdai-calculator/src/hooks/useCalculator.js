@@ -3,7 +3,7 @@ import { calculateTotals, getSeverityBand } from '../utils/calculator.js';
 
 const STORAGE_KEY = 'pdai-calculator-data';
 
-const INITIAL_SKIN = {
+export const INITIAL_SKIN = {
   ears: { erosions: 0, pigmentation: 0, lesionCount: 0 },
   nose: { erosions: 0, pigmentation: 0, lesionCount: 0 },
   face: { erosions: 0, pigmentation: 0, lesionCount: 0 },
@@ -18,9 +18,9 @@ const INITIAL_SKIN = {
   genitals: { erosions: 0, pigmentation: 0, lesionCount: 0 },
 };
 
-const INITIAL_SCALP = { erosions: 0, pigmentation: 0, lesionCount: 0 };
+export const INITIAL_SCALP = { erosions: 0, pigmentation: 0, lesionCount: 0 };
 
-const INITIAL_MUCOSA = {
+export const INITIAL_MUCOSA = {
   eyes: { score: 0, lesionCount: 0 }, nose: { score: 0, lesionCount: 0 },
   buccal: { score: 0, lesionCount: 0 }, hardPalate: { score: 0, lesionCount: 0 },
   softPalate: { score: 0, lesionCount: 0 }, upperGingiva: { score: 0, lesionCount: 0 },
@@ -29,10 +29,36 @@ const INITIAL_MUCOSA = {
   pharynx: { score: 0, lesionCount: 0 }, anogenital: { score: 0, lesionCount: 0 },
 };
 
-const INITIAL_PATIENT = { fullName: '', birthYear: '', diagnosis: '', immunofluorescence: '' };
+export const INITIAL_PATIENT = { fullName: '', birthYear: '', diagnosis: '', immunofluorescence: '' };
+
+function isPlainObject(v) {
+  return typeof v === 'object' && v !== null && !Array.isArray(v);
+}
+
+// Merge a single region against a template shape: keep only known fields,
+// fall back to the template value for missing/wrong-typed entries.
+function mergeRegion(template, value) {
+  const src = isPlainObject(value) ? value : {};
+  const result = {};
+  for (const [field, def] of Object.entries(template)) {
+    result[field] = typeof src[field] === 'number' ? src[field] : def;
+  }
+  return result;
+}
+
+// Merge a keyed collection (skin/mucosa) against its template: only known
+// top-level keys survive, each region is shape-validated, missing keys default.
+function mergeCollection(template, value) {
+  const src = isPlainObject(value) ? value : {};
+  const result = {};
+  for (const [key, regionTemplate] of Object.entries(template)) {
+    result[key] = mergeRegion(regionTemplate, src[key]);
+  }
+  return result;
+}
 
 function migrateMucosa(mucosa) {
-  if (!mucosa) return null;
+  if (!isPlainObject(mucosa)) return mucosa;
   const result = {};
   for (const [k, v] of Object.entries(mucosa)) {
     result[k] = typeof v === 'number' ? { score: v, lesionCount: 0 } : v;
@@ -40,13 +66,30 @@ function migrateMucosa(mucosa) {
   return result;
 }
 
+// Validate/merge a parsed payload against the INITIAL_* shapes so a partial,
+// foreign, or corrupt blob can never inject undefined/foreign area objects
+// into state. Returns null for any non-object payload.
+export function sanitizeSaved(parsed) {
+  if (!isPlainObject(parsed)) return null;
+  const patientSrc = isPlainObject(parsed.patientData) ? parsed.patientData : {};
+  const patientData = {};
+  for (const [field, def] of Object.entries(INITIAL_PATIENT)) {
+    patientData[field] = typeof patientSrc[field] === 'string' ? patientSrc[field] : def;
+  }
+  return {
+    patientData,
+    recommendations: typeof parsed.recommendations === 'string' ? parsed.recommendations : '',
+    skinAreas: mergeCollection(INITIAL_SKIN, parsed.skinAreas),
+    scalp: mergeRegion(INITIAL_SCALP, parsed.scalp),
+    mucosa: mergeCollection(INITIAL_MUCOSA, migrateMucosa(parsed.mucosa)),
+  };
+}
+
 function loadSaved() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
-      const parsed = JSON.parse(raw);
-      if (parsed?.mucosa) parsed.mucosa = migrateMucosa(parsed.mucosa);
-      return parsed;
+      return sanitizeSaved(JSON.parse(raw));
     }
   } catch { /* ignore */ }
   return null;
