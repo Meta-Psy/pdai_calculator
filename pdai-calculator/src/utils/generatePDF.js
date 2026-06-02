@@ -1,11 +1,15 @@
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { SKIN_KEYS, MUCOSA_KEYS } from '../hooks/useCalculator';
+import { getSeverityBand } from './calculator.js';
 
 function getSeverityStyle(score) {
-  if (score < 15) return { bg: '#dcfce7', color: '#15803d', border: '#86efac' };
-  if (score < 45) return { bg: '#fef9c3', color: '#a16207', border: '#facc15' };
-  return { bg: '#fee2e2', color: '#b91c1c', border: '#fca5a5' };
+  const styles = {
+    mild: { bg: '#dcfce7', color: '#15803d', border: '#86efac' },
+    moderate: { bg: '#fef9c3', color: '#a16207', border: '#facc15' },
+    severe: { bg: '#fee2e2', color: '#b91c1c', border: '#fca5a5' },
+  };
+  return styles[getSeverityBand(score)];
 }
 
 function esc(str) {
@@ -155,11 +159,7 @@ function buildHTML(data) {
   const { patientData, skinAreas, scalp, mucosa, totals, recommendations, t } = data;
   const sev = getSeverityStyle(totals.overallSeverity);
 
-  const getSevLabel = (score, t) => {
-    if (score < 15) return t('results.mild');
-    if (score < 45) return t('results.moderate');
-    return t('results.severe');
-  };
+  const getSevLabel = (score, t) => t(`results.${getSeverityBand(score)}`);
 
   // Patient info row
   const patientParts = [];
