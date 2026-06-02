@@ -74,7 +74,7 @@ export function useCalculator() {
   const updatePatient = (f, v) => setPatientData(p => ({ ...p, [f]: v }));
 
   const updateSkin = (area, field, value) => {
-    const n = typeof value === 'number' ? value : (value === '' ? 0 : parseInt(value));
+    const n = typeof value === 'number' ? value : (value === '' ? 0 : parseInt(value, 10));
     const val = isNaN(n) ? 0 : n;
     setSkinAreas(p => {
       const updated = { ...p, [area]: { ...p[area], [field]: val } };
@@ -86,7 +86,7 @@ export function useCalculator() {
   };
 
   const updateScalp = (field, value) => {
-    const n = typeof value === 'number' ? value : (value === '' ? 0 : parseInt(value));
+    const n = typeof value === 'number' ? value : (value === '' ? 0 : parseInt(value, 10));
     const val = isNaN(n) ? 0 : n;
     setScalp(p => {
       const updated = { ...p, [field]: val };
@@ -98,7 +98,7 @@ export function useCalculator() {
   };
 
   const updateMucosa = (area, field, value) => {
-    const n = typeof value === 'number' ? value : (value === '' ? 0 : parseInt(value));
+    const n = typeof value === 'number' ? value : (value === '' ? 0 : parseInt(value, 10));
     const val = isNaN(n) ? 0 : n;
     setMucosa(p => {
       const updated = { ...p, [area]: { ...p[area], [field]: val } };
