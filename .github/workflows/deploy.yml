@@ -41,9 +41,6 @@ jobs:
 
   deploy:
     needs: build-image
-    # Re-enabled for push-deploy in a later step after the first controlled
-    # workflow_dispatch run verifies /home/calc/app serves correctly.
-    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Download image artifact
