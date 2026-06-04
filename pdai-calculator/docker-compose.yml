@@ -1,6 +1,6 @@
 services:
   app:
-    image: pdai-app:${IMAGE_TAG:-latest}
+    image: pdai-app:${IMAGE_TAG:?set IMAGE_TAG to the image SHA (CI sets it; never a floating latest)}
     restart: unless-stopped
     ports:
       - "80:80"
