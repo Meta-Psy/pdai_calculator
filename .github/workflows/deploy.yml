@@ -70,8 +70,8 @@ jobs:
             set -e
             docker load -i /tmp/pdai-app.tar.gz
             cd ~/app
-            git fetch origin main
-            git reset --hard origin/main
+            git fetch origin
+            git reset --hard ${{ github.sha }}
             cd pdai-calculator
             IMAGE_TAG=${{ github.sha }} docker compose up -d --force-recreate app
             docker compose up -d certbot
