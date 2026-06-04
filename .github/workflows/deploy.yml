@@ -13,37 +13,69 @@ jobs:
         working-directory: pdai-calculator
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: pdai-calculator/package-lock.json
-
       - run: npm ci
       - run: npm run lint
       - run: npm test
       - run: npm run build
 
-  deploy:
+  build-image:
     needs: check
-    # Manual only until the new server is provisioned (SSH key + deploy user +
-    # hardening). Keeps `check` as the meaningful push signal instead of a
-    # permanently-red SSH timeout. Re-enable push-deploy once the server is ready.
-    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy via SSH
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t pdai-app:${{ github.sha }} pdai-calculator
+      - name: Save image as gzipped tar
+        run: docker save pdai-app:${{ github.sha }} | gzip > /tmp/pdai-app.tar.gz
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdai-image
+          path: /tmp/pdai-app.tar.gz
+          retention-days: 1
+
+  deploy:
+    needs: build-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pdai-image
+          path: .
+      - name: Copy image tar to the box
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          # scp-action runs in a container that only sees /github/workspace,
+          # so source must be workspace-relative (not the runner's /tmp).
+          source: pdai-app.tar.gz
+          target: /tmp
+      - name: Load image and bring up the stack
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
+          command_timeout: 10m
           script: |
             set -e
+            # Export so every compose invocation below can interpolate the
+            # app service's image:${IMAGE_TAG} — compose resolves the whole
+            # file even when targeting only the certbot service.
+            export IMAGE_TAG=${{ github.sha }}
+            docker load -i /tmp/pdai-app.tar.gz
             cd ~/app
-            git fetch origin main
-            git reset --hard origin/main
+            git fetch origin
+            git reset --hard ${{ github.sha }}
             cd pdai-calculator
-            docker compose build --no-cache
-            docker compose up -d --force-recreate
+            docker compose up -d --force-recreate app
+            docker compose up -d certbot
+            rm -f /tmp/pdai-app.tar.gz
