@@ -79,3 +79,10 @@ jobs:
             docker compose up -d --force-recreate app
             docker compose up -d certbot
             rm -f /tmp/pdai-app.tar.gz
+            # Best-effort cleanup: keep the 5 most recent pdai-app:<sha>
+            # images (the running one is in use and never removed). Never
+            # fail the deploy on cleanup errors.
+            docker images pdai-app --format '{{.Repository}}:{{.Tag}} {{.CreatedAt}}' \
+              | sort -k2 -r | tail -n +6 | awk '{print $1}' \
+              | xargs -r docker rmi >/dev/null 2>&1 || true
+            docker image prune -f >/dev/null 2>&1 || true
