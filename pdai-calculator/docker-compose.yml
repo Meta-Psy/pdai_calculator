@@ -1,6 +1,6 @@
 services:
   app:
-    build: .
+    image: pdai-app:${IMAGE_TAG:-latest}
     restart: unless-stopped
     ports:
       - "80:80"
