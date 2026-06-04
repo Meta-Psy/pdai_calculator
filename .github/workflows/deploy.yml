@@ -70,11 +70,15 @@ jobs:
           command_timeout: 10m
           script: |
             set -e
+            # Export so every compose invocation below can interpolate the
+            # app service's image:${IMAGE_TAG} — compose resolves the whole
+            # file even when targeting only the certbot service.
+            export IMAGE_TAG=${{ github.sha }}
             docker load -i /tmp/pdai-app.tar.gz
             cd ~/app
             git fetch origin
             git reset --hard ${{ github.sha }}
             cd pdai-calculator
-            IMAGE_TAG=${{ github.sha }} docker compose up -d --force-recreate app
+            docker compose up -d --force-recreate app
             docker compose up -d certbot
             rm -f /tmp/pdai-app.tar.gz
