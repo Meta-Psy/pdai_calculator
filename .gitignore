@@ -8,3 +8,5 @@
 
 # GitNexus graph index (local-only, regenerated per machine)
 .gitnexus/
+
+node_modules/
