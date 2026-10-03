@@ -10,6 +10,9 @@ services:
       - ./nginx/nginx-ssl.conf:/etc/nginx/conf.d/default.conf:ro
       - ../../certbot/conf:/etc/letsencrypt:ro
       - ../../certbot/www:/var/www/certbot:ro
+    # nginx reads certs only at start/reload; certbot (separate container)
+    # renews them on disk. Reload every 6h so a renewed cert is picked up.
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & exec nginx -g \"daemon off;\"'"
 
   certbot:
     image: certbot/certbot
